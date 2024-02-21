@@ -17,21 +17,40 @@ def loadImages():
 
 
 def main():
-    p.init()
-    screen = p.display.set_mode((WIDTH, HEIGHT))
-    clock = p.time.Clock()
-    screen.fill(p.Color("white"))
-    gs = chessEngine.GameState()
-    loadImages()
-    running = True
+    p.init()                                                    # Initialize Pygame
+    screen = p.display.set_mode((WIDTH, HEIGHT))                
+    clock = p.time.Clock()                                      #  for controlling frame rates
+    screen.fill(p.Color("white"))                               
+    gs = chessEngine.GameState()                                # Create an instance of the GameState class from chessEngine
+    loadImages()                                              
+    running = True  
+    sqSleected=(     )                                          #tuple to keep track of last click of user
+    playerClicks   =[]                                          #keep tracks of player clicks(two tuples:[(6,4),(4,4)])     
     while running:
-        for e in p.event.get():
-            if e.type == p.QUIT:
-                running = False
+        for e in p.event.get():  
+            if e.type == p.QUIT:                                 # If the QUIT event (window close) is detected
+                running = False  
+            elif e.type== p.MOUSEBUTTONDOWN:                     #logic to move pieces
+                loaction=p.mouse.get_pos()
+                col=loaction[0]//SQ_SIZE
+                row=loaction[1]//SQ_SIZE
+                if sqSleected==(row,col):                            #if user clicked the same square twice
+                    sqSleected=()                                   #deselected
+                    playerClicks=[]                                  #clear player clicks
+                else:
+                    sqSleected=(row,col)
+                    playerClicks.append(sqSleected)                     #append for both 1st and 2nd clicks
+                    
+                    
+                if len(playerClicks)==2: #check for 2nd click
+                    move= chessEngine.Move(playerClicks[0],playerClicks[1],gs.board)     
+                    print(move.getChessNotation())
+                    gs.makeMove(move)
+                    sqSleected=( )  #reset click
 
-        drawGameState(screen, gs)  # Draw the game state
-        p.display.flip()
-        clock.tick(MAX_FPS)
+        drawGameState(screen, gs)  
+        p.display.flip()  
+        clock.tick(MAX_FPS)  
 
 
 
