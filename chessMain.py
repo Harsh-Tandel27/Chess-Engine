@@ -34,19 +34,26 @@ def main():
                 loaction=p.mouse.get_pos()
                 col=loaction[0]//SQ_SIZE
                 row=loaction[1]//SQ_SIZE
+
+
+                print("Selected Square:", (row, col))
                 if sqSleected==(row,col):                            #if user clicked the same square twice
                     sqSleected=()                                   #deselected
                     playerClicks=[]                                  #clear player clicks
                 else:
                     sqSleected=(row,col)
-                    playerClicks.append(sqSleected)                     #append for both 1st and 2nd clicks
+                    playerClicks.append(sqSleected)      
+
+                print("Player Clicks:", playerClicks)              #append for both 1st and 2nd clicks
                     
                     
                 if len(playerClicks)==2: #check for 2nd click
                     move= chessEngine.Move(playerClicks[0],playerClicks[1],gs.board)     
-                    print(move.getChessNotation())
+                    print("Chess Notation",move.getChessNotation())
                     gs.makeMove(move)
-                    sqSleected=( )  #reset click
+                    sqSleected=()
+                    playerClicks=[]
+                    
 
         drawGameState(screen, gs)  
         p.display.flip()  

@@ -30,7 +30,7 @@ class Move():
     
     rowsToRank={v:k for k,v in rankstoRows.items()} #revsese ranktoRows
 
-    filesToCols={ "a":0,"b":"1","c":2,"d":3,
+    filesToCols={"a":0,"b":1,"c":2,"d":3,
                  "e":4, "f":5,"g":6,"h":7}
     colsToFiles={v:k for k, v in filesToCols.items()}
 
