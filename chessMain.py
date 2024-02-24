@@ -30,11 +30,13 @@ def main():
         for e in p.event.get():  
             if e.type == p.QUIT:                                 # If the QUIT event (window close) is detected
                 running = False  
+            
+            #Mouse Handlers
             elif e.type== p.MOUSEBUTTONDOWN:                     #logic to move pieces
                 loaction=p.mouse.get_pos()
                 col=loaction[0]//SQ_SIZE
                 row=loaction[1]//SQ_SIZE
-
+            
 
                 print("Selected Square:", (row, col))
                 if sqSleected==(row,col):                            #if user clicked the same square twice
@@ -53,6 +55,12 @@ def main():
                     gs.makeMove(move)
                     sqSleected=()
                     playerClicks=[]
+
+                #key Handelers
+            elif e.type==p.KEYDOWN:
+                if e.key == p.K_z:
+                    gs.undoMove()
+
                     
 
         drawGameState(screen, gs)  
